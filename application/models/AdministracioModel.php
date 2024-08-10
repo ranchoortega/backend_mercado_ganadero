@@ -113,4 +113,33 @@ class AdministracioModel extends CI_Model {
             }
         }
     }
+
+
+
+    //PAGES
+
+    public function getPages($nocontar, $inicio, $filas)
+    {
+        $this->db->select("*");
+        $this->db->from('pages_status');
+     
+        if ($nocontar) {
+            if ($filas > 0) {
+                $this->db->limit($filas, $inicio);
+            }
+            $query = $this->db->get();
+            if ($query->num_rows() > 0) {
+                return $query->result();
+            } else {
+                return false;
+            }
+        } else {
+            $query = $this->db->get();
+            if ($query->num_rows() > 0) {
+                return $query->num_rows();
+            } else {
+                return false;
+            }
+        }
+    }
 }
