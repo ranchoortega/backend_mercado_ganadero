@@ -38,6 +38,8 @@ class AdministracioModel extends CI_Model {
         $this->db->select("U.name,  U.id_user");
         $this->db->from('descripcion_animal A');
         $this->db->join('usuarios U','U.id_user = A.id_usuario');
+        $this->db->where('A.id_usuario !=', 1);
+
 
         if ($nocontar) {
             if ($filas > 0) {
@@ -123,6 +125,36 @@ class AdministracioModel extends CI_Model {
         $this->db->select("*");
         $this->db->from('pages_status');
      
+        if ($nocontar) {
+            if ($filas > 0) {
+                $this->db->limit($filas, $inicio);
+            }
+            $query = $this->db->get();
+            if ($query->num_rows() > 0) {
+                return $query->result();
+            } else {
+                return false;
+            }
+        } else {
+            $query = $this->db->get();
+            if ($query->num_rows() > 0) {
+                return $query->num_rows();
+            } else {
+                return false;
+            }
+        }
+    }
+
+
+    //AnimalesAdmin
+    public function getDescripcionAnimales($nocontar, $inicio, $filas)
+    {
+       
+        $this->db->select("*");
+        $this->db->from('descripcion_animal A');
+        $this->db->where('A.id_usuario', 1);
+
+
         if ($nocontar) {
             if ($filas > 0) {
                 $this->db->limit($filas, $inicio);
