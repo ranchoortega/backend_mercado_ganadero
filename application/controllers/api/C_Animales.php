@@ -12,6 +12,7 @@ class C_Animales extends Rest_controller
     {
         parent::__construct();
         $this->load->model('GlobalModel', 'gm');
+        $this->load->model('ClienteModel', 'cm');
 
     }
 
@@ -56,6 +57,24 @@ class C_Animales extends Rest_controller
 
 
     }
+
+    public function getAnimales($tipo){
+        if($tipo){
+            
+            $r = $this->cm->getAnimales($tipo);
+            if (!$r) {
+                $this->respuesta(404, ["mensaje" => "No  documentos"]);
+                return false;
+            }
+            $this->respuesta(200, $r);
+            return false;
+        
+        }
+
+    }
+  
+
+    
 
 
 
