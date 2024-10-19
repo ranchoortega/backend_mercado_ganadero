@@ -58,10 +58,34 @@ class C_Animales extends Rest_controller
 
     }
 
-    public function getAnimales($tipo){
+    public function getAnimales(){
+        $tipo = $this->input->get("tipo");
+        $page = $this->input->get("page");
+
+
+        if($tipo && $page){
+            $limit = 9;
+            $offset = $page*9;
+            $this->db->limit();
+            $r = $this->cm->getAnimales($tipo, $limit, $offset);
+            if (!$r) {
+                $this->respuesta(404, ["mensaje" => "No  documentos"]);
+                return false;
+            }
+            $this->respuesta(200, $r);
+            return false;
+        
+        }
+
+    }
+
+    
+    public function getNumber(){
+        $tipo = $this->input->get("tipo");
+
         if($tipo){
             
-            $r = $this->cm->getAnimales($tipo);
+            $r = $this->cm->getNumero($tipo);
             if (!$r) {
                 $this->respuesta(404, ["mensaje" => "No  documentos"]);
                 return false;

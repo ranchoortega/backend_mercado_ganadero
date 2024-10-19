@@ -11,7 +11,7 @@ class ClienteModel extends CI_Model
     }
 
 
-    public function getAnimales($tipo)
+    public function getAnimales($tipo, $limit, $offset)
     {
 
         $this->db->select("F.url,A.*,U.phone");
@@ -23,7 +23,8 @@ class ClienteModel extends CI_Model
         $this->db->order_by('A.id_usuario', 'ASC');
 
         $this->db->order_by('F.id_descripcion', 'DESC');
-        
+        $this->db->limit($limit);
+
 
 
 
@@ -46,7 +47,7 @@ class ClienteModel extends CI_Model
         $this->db->group_by('F.id_descripcion'); // Agrupa por id_descripcion para evitar duplicados
 
         $this->db->order_by('F.id_descripcion', 'DESC');
-        
+
 
 
 
@@ -58,6 +59,25 @@ class ClienteModel extends CI_Model
         }
 
     }
+    public function getNumero($tipo)
+    {
+        // Selecciona solo el conteo de los registros
+        $this->db->select("COUNT(*) as total");
+        $this->db->from('descripcion_animal A');
+        $this->db->where('A.tipo', $tipo);
+
+        // Ejecuta la consulta
+        $query = $this->db->get();
+
+        // Verifica si hay resultados
+        if ($query->num_rows() > 0) {
+            // Devuelve el número total de registros
+            return $query->row()->total; // Accede al campo 'total' del resultado
+        } else {
+            return 0; // Devuelve 0 si no hay resultados
+        }
+    }
+
 
 
 
