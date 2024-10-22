@@ -69,6 +69,9 @@ class Login extends Rest_controller
         $name = $this->input->post("name");
         $phone = $this->input->post("phone");
         $location = $this->input->post("location");
+        $pais = $this->input->post("pais");
+        $estado = $this->input->post("estado");
+        $municipio = $this->input->post("municipio");
         
         // Verifica si el usuario ya existe
         $userExists = $this->gm->checkUsernameExists($user);
@@ -83,6 +86,7 @@ class Login extends Rest_controller
                 "password" => $password,
                 "name" => $name,
                 "phone" => $phone,
+                "location" => $location,
                 "location" => $location,
                 "fecha_alta" => $fechaActual
             ];
