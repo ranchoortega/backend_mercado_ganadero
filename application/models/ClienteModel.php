@@ -78,6 +78,25 @@ class ClienteModel extends CI_Model
         }
     }
 
+    public function getEstadoMunicipio($estado)
+    {
+     
+        $this->db->select("M.*, EM.id");
+        $this->db->from('estados_municipios EM');
+        $this->db->join('municipios M', 'EM.municipios_id = M.id');
+        $this->db->where('EM.estados_id', $estado);
+
+
+
+        $query = $this->db->get();
+        if ($query->num_rows() > 0) {
+            return $query->result();
+        } else {
+            return false;
+        }
+
+    }
+
 
 
 
