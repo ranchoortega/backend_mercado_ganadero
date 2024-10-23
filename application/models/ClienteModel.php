@@ -16,7 +16,7 @@ class ClienteModel extends CI_Model
 
         $this->db->select("F.url,A.*,U.phone");
         $this->db->from('files F');
-        $this->db->join('descripcion_animal A', 'F.id_descripcion = A.id_descripcion');
+        $this->db->join('descripcion_animal A', 'F.id_descripcion  = A.id_descripcion');
         $this->db->join(' Usuarios U', ' = A.id_usuario = U.id_user');
         $this->db->where('A.tipo', $tipo);
         $this->db->group_by('F.id_descripcion'); // Agrupa por id_descripcion para evitar duplicados
@@ -61,6 +61,7 @@ class ClienteModel extends CI_Model
     }
     public function getNumero($tipo)
     {
+       
         // Selecciona solo el conteo de los registros
         $this->db->select("COUNT(*) as total");
         $this->db->from('descripcion_animal A');
@@ -81,7 +82,7 @@ class ClienteModel extends CI_Model
     public function getEstadoMunicipio($estado)
     {
      
-        $this->db->select("M.*, EM.id");
+        $this->db->select("M.municipio, EM.id");
         $this->db->from('estados_municipios EM');
         $this->db->join('municipios M', 'EM.municipios_id = M.id');
         $this->db->where('EM.estados_id', $estado);

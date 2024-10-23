@@ -30,6 +30,10 @@ class C_Animales extends Rest_controller
             $genero = $this->input->post("genero");
             $descripcion = $this->input->post("descripcion");
             $precio = $this->input->post("precio");
+            $desparasitado = $this->input->post("desparasitado");
+            $anuncio = $this->input->post("anuncio");
+            $peso = $this->input->post("peso");
+            $tipo = $this->input->post("tipo");
             
 
 
@@ -40,6 +44,10 @@ class C_Animales extends Rest_controller
                 "genero" => $genero,
                 "descripcion" => $descripcion,
                 "precio" => $precio,
+                "desparasitado" => $desparasitado,
+                "anuncio" => $anuncio,
+                "peso" => $peso,
+                "tipo" => $tipo,
                 "fecha_alta" => $fechaActual
             ];
             $r = $this->gm->save_tabla("descripcion_animal", $form);
@@ -58,26 +66,30 @@ class C_Animales extends Rest_controller
 
     }
 
-    public function getAnimales(){
+    public function getAnimales() {
         $tipo = $this->input->get("tipo");
         $page = $this->input->get("page");
-
-
-        if($tipo && $page){
-            $limit = 9;
-            $offset = $page*9;
-            $this->db->limit();
-            $r = $this->cm->getAnimales($tipo, $limit, $offset);
-            if (!$r) {
-                $this->respuesta(404, ["mensaje" => "No  documentos"]);
-                return false;
-            }
-            $this->respuesta(200, $r);
+    
+        // Validar si $page está definida y es numérica
+        $page = isset($page) && is_numeric($page) ? (int)$page : 0;
+    
+        // Establecer el límite y el offset
+        $limit = 9;
+        $offset = $page * $limit;  // Multiplicar el número de página por el límite para obtener el offset
+    
+        // Aplicar el límite y el offset en la consulta
+        $this->db->limit($limit, $offset);
+        $r = $this->cm->getAnimales($tipo, $limit, $offset);
+    
+        if (!$r) {
+            $this->respuesta(404, ["mensaje" => "No hay documentos"]);
             return false;
-        
         }
-
+    
+        $this->respuesta(200, $r);
+        return false;
     }
+    
 
     
     public function getNumber(){
