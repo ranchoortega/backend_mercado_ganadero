@@ -50,6 +50,8 @@ class C_Animales extends Rest_controller
                 "tipo" => $tipo,
                 "fecha_alta" => $fechaActual
             ];
+
+            
             $r = $this->gm->save_tabla("descripcion_animal", $form);
           
 
