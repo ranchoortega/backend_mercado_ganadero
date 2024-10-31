@@ -92,7 +92,44 @@ class C_Animales extends Rest_controller
         return false;
     }
     
-
+    public function getAnimalesRecomendados() {
+        try {
+            $r = $this->cm->getAnimalesRecomendados(9,0); 
+        } catch (Exception $e) {
+            log_message('error', 'Error en la consulta: ' . $e->getMessage());
+            $this->respuesta(500, ["mensaje" => "Error en la consulta: " . $e->getMessage()]);
+            return false;
+        }
+    
+        if (!$r) {
+            $this->respuesta(404, ["mensaje" => "No hay documentos"]);
+            return false;
+        }
+    
+        
+        $this->respuesta(200, ["data" => $r]); 
+        return false;
+    }
+    
+    public function getAnimalesAgregados() {
+        try {
+            $r = $this->cm->getAnimalesAgregados(); 
+        } catch (Exception $e) {
+            log_message('error', 'Error en la consulta: ' . $e->getMessage());
+            $this->respuesta(500, ["mensaje" => "Error en la consulta: " . $e->getMessage()]);
+            return false;
+        }
+    
+        if (!$r) {
+            $this->respuesta(404, ["mensaje" => "No hay documentos"]);
+            return false;
+        }
+        
+        $this->respuesta(200, ["data" => $r]); 
+        return false;
+    }
+    
+    
     
     public function getNumber(){
         $tipo = $this->input->get("tipo");
@@ -110,17 +147,6 @@ class C_Animales extends Rest_controller
         }
 
     }
-  
-
-    
-
-
-
-
-
-
-
-
-
+ 
 
 }

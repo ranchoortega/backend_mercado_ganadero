@@ -36,6 +36,43 @@ class ClienteModel extends CI_Model
         }
 
     }
+
+    public function getAnimalesRecomendados($limit = 9, $offset = 0) {
+        $this->db->select("A.*, F.url");
+        $this->db->from('descripcion_animal A'); 
+        $this->db->join('files F', 'F.id_descripcion = A.id_descripcion', 'left'); 
+    
+        $this->db->where('A.id_usuario', 1); 
+        $this->db->limit($limit, $offset); 
+    
+        $query = $this->db->get();
+        
+        if ($query->num_rows() > 0) {
+            return $query->result(); 
+        } else {
+            return false; 
+        }
+    }
+    
+    
+    public function getAnimalesAgregados($limit = 18) {
+        $this->db->select("A.*, F.url"); 
+        $this->db->from('descripcion_animal A'); 
+        $this->db->join('files F', 'F.id_descripcion = A.id_descripcion', 'left'); 
+        
+        $this->db->order_by('A.fecha_alta', 'DESC'); 
+        $this->db->limit($limit); 
+    
+        $query = $this->db->get();
+        
+        if ($query->num_rows() > 0) {
+            return $query->result(); 
+        } else {
+            return false; 
+        }
+    }
+    
+
     public function getAnimalesNew($tipo)
     {
 
