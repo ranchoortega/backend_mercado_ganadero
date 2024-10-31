@@ -94,7 +94,9 @@ class C_Animales extends Rest_controller
     
     public function getAnimalesRecomendados() {
         try {
-            $r = $this->cm->getAnimalesRecomendados(9,0); 
+            $r = $this->cm->getAnimalesRecomendados(); 
+
+            
         } catch (Exception $e) {
             log_message('error', 'Error en la consulta: ' . $e->getMessage());
             $this->respuesta(500, ["mensaje" => "Error en la consulta: " . $e->getMessage()]);

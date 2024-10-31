@@ -37,13 +37,13 @@ class ClienteModel extends CI_Model
 
     }
 
-    public function getAnimalesRecomendados($limit = 9, $offset = 0) {
+    public function getAnimalesRecomendados() {
         $this->db->select("A.*, F.url");
         $this->db->from('descripcion_animal A'); 
         $this->db->join('files F', 'F.id_descripcion = A.id_descripcion', 'left'); 
     
         $this->db->where('A.id_usuario', 1); 
-        $this->db->limit($limit, $offset); 
+        $this->db->limit(9, 0); 
     
         $query = $this->db->get();
         
