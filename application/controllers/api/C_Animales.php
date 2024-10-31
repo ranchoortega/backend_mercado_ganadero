@@ -100,7 +100,7 @@ class C_Animales extends Rest_controller
         if($tipo){
             
             $r = $this->cm->getNumero($tipo);
-            if (!$r) {
+            if ($r == 0) {
                 $this->respuesta(404, ["mensaje" => "No  documentos"]);
                 return false;
             }
