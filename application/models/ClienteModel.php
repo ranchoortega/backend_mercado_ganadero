@@ -55,6 +55,7 @@ class ClienteModel extends CI_Model
     }
     
     
+    
     public function getAnimalesAgregados($limit = 18) {
         $this->db->select("A.*, F.url"); 
         $this->db->from('descripcion_animal A'); 
